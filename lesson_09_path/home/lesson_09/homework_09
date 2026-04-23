@@ -1,0 +1,96 @@
+
+from pathlib import Path
+
+
+parent = Path('c:/alexthender/alexthender_repository/lesson_09_path/home/lesson_09')
+print(parent)       #Виводимо директорію
+
+current_folder = Path(__file__).parent
+file_1 = current_folder / "hello.txt"
+print(current_folder)       #Виводимо директорію, де знаходиться файл, в якому ми зраз прописуємо код
+
+with open(file_1, "w") as f:
+    f.write("```Hello, Python!```")     #Записуємо у новостворений файл свій текст
+print(file_1.exists())      #Превіряємо чи існує файл "hello.txt", який ми створили
+
+with open(file_1, "r") as f:
+    content = f.read()
+    print(content)      #Виводимо на екран вміст файлу "hello.txt"
+
+with open(file_1, "a") as f:
+    f.write("\n```Learning file operations.```")        #Доповнюємо текс у файлі новим текстом з нового рядка
+
+with open(file_1, "r") as f:
+    content = f.read()
+    print(content)      #Виводимо на екран вміст файлу "hello.txt"
+
+with open(file_1, "r") as f:
+    line_1 = f.readline()
+    print(f'Перша строка: {line_1}', end="")
+
+with open(file_1, "r") as f:
+    f.readline()        #Пропустити першу строку
+    line_2 = f.readline()       #Виводимо другу строку
+    print(f'Друга строка: {line_2}')
+
+with open(file_1, "r") as f:
+    sentenses = f.read()        #Читаємо текст файлу 
+    print(sentenses)
+    num_of_symbols = len(sentenses)
+    print(num_of_symbols)       #Виводимо кількість символів у файлі "hello.txt"
+
+
+current_folder = Path(__file__).parent / "data"
+current_folder.mkdir(exist_ok=True)
+
+
+file_2 = current_folder / "notes.txt"
+with open(file_2, "w") as file:
+    file.write("```My first note.```")
+
+files = [f for f in current_folder.iterdir() if f.is_file()]
+print("Список всіх файлів у папці 'data':")
+for file in files:
+    print(file)
+
+
+with open(file_2, "r") as f:
+    data_text = f.read()
+    print(data_text)        #Читаємо файл 'notes.txt' та записуємо інформацію у змінну
+
+file_3 = current_folder / "copy.txt"
+with open(file_3, "w") as f:
+    f.write(data_text)      #Створюємо новий файл'copy.txt.' та записуємо в нього інформацію з файлу 'notes.txt'
+
+file_4 = current_folder / "a.txt"       #Задаємо ім'я для нового файлу
+with open(file_4, "w", encoding='utf-8') as f:
+    f.write("Якби ви вчились так як треба, ")       #У створений файл додаємо свій текст
+
+file_5 = current_folder / "b.txt"       #Задаємо ім'я для нового файлу
+with open(file_5, "w", encoding='utf-8') as f:      
+    f.write("то й мудрість би була своя. Т.Г. Шевченко")        #У створений файл додаємо свій текст
+
+with open(file_4, "r", encoding='utf-8') as f:
+    file_4_text = f.read()      #Чистаємо з файлу информацію та зберігаємо у змінну
+    print(file_4_text)
+
+with open(file_5, "r", encoding='utf-8') as f:
+    file_5_text = f.read()      #Чистаємо з файлу информацію та зберігаємо у змінну
+    print(file_5_text)
+
+file_6 = current_folder / "ab.txt"
+with open(file_6, "w", encoding='utf-8') as f:
+    f.write(file_4_text)        #Записуємо значення змінної "file_4_text" у файл "ab.txt"
+
+with open(file_6, "a", encoding='utf-8') as f:
+    f.write(file_5_text)        #Доповнюємо файл "ab.txt" значенням змінної "file_5_text"
+
+with open(file_6, "r", encoding="utf-8") as f:
+    file_text_6 = f.read()
+    print(file_text_6)      #Зчитуємо та виводимо информацію з файлу "ab.txt"
+
+    
+if "note" in data_text:     #Перевіряємо чи є слово "note" у файлі "note.txt"
+    print(f'Слово "note" у файлі знайдено')     #Виводимо результат
+else:
+    print(f'Слово "note" у файлі не знайдено') 
